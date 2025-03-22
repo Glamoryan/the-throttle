@@ -1,0 +1,19 @@
+// SCSS styles for Register page
+.register-container {
+  @include form-container;
+}
+
+.register-card {
+  @include card;
+}
+
+.register-button {
+  @include button;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: var(--spacing-md);
+  font-size: 14px;
+  color: var(--color-text-muted);
+} 

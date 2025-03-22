@@ -1,0 +1,42 @@
+// SCSS styles for Dashboard page
+.dashboard-container {
+  @include form-container;
+  max-width: 800px;
+}
+
+.dashboard-card {
+  @include card;
+}
+
+.user-profile {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: var(--color-tertiary);
+  border-radius: var(--border-radius-sm);
+}
+
+.profile-info p {
+  margin: 10px 0;
+}
+
+.loading {
+  text-align: center;
+  margin: 20px 0;
+  color: var(--color-text-muted);
+}
+
+.logout-button {
+  width: 100%;
+  padding: var(--spacing-sm);
+  background-color: var(--color-error);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  
+  &:hover {
+    opacity: 0.9;
+  }
+} 

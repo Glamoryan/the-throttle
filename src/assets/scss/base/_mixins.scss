@@ -1,0 +1,62 @@
+// Mixin for form container
+@mixin form-container {
+  width: 100%;
+  max-width: 450px;
+  padding: var(--spacing-md);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+// Mixin for card style
+@mixin card {
+  background-color: var(--color-secondary);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-card);
+  padding: var(--spacing-lg);
+  width: 100%;
+  border: 1px solid var(--color-tertiary);
+}
+
+// Mixin for button style
+@mixin button {
+  width: 100%;
+  padding: var(--spacing-sm);
+  background-color: var(--color-button-bg);
+  color: var(--color-button-text);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  
+  &:hover {
+    background-color: var(--color-button-hover);
+    color: var(--color-button-text-hover);
+  }
+}
+
+// Mixin for form input style
+@mixin form-input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  color: var(--color-text-light);
+  border-radius: var(--border-radius-sm);
+  font-size: 16px;
+  transition: border-color var(--transition-speed);
+  
+  &:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+  }
+}
+
+// Mixin for form label style
+@mixin form-label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: bold;
+  color: var(--color-text-muted);
+} 

@@ -1,0 +1,66 @@
+// CSS variables and new color palette
+:root {
+  // Main Colors
+  --color-primary: #121212;
+  --color-secondary: #1e1e1e;
+  --color-tertiary: #2d2d2d;
+  --color-accent: #9370db;
+  
+  // Text Colors
+  --color-text-light: #ffffff;
+  --color-text-muted: #b3b3b3;
+  
+  // Form Elements
+  --color-input-bg: #2d2d2d;
+  --color-input-border: #3d3d3d;
+  --color-input-focus: #bb86fc;
+  
+  // Buttons
+  --color-button-bg: #483d8b;
+  --color-button-hover: #9370db;
+  --color-button-text: #ffffff;
+  --color-button-text-hover: #121212;
+  
+  // Error Messages
+  --color-error: #cf6679;
+  
+  // Shadows
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.35);
+  
+  // Border Radius
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  
+  // Spacing
+  --spacing-xs: 6px;
+  --spacing-sm: 12px;
+  --spacing-md: 20px;
+  --spacing-lg: 30px;
+  
+  // Transitions
+  --transition-speed: 0.3s;
+}
+
+// SCSS variables
+// Main Colors
+$color-primary: #121212;
+$color-secondary: #1e1e1e;
+$color-tertiary: #2d2d2d;
+$color-accent: #9370db;
+
+// Text Colors
+$color-text-light: #ffffff;
+$color-text-muted: #b3b3b3;
+
+// Spacing
+$spacing-xs: 6px;
+$spacing-sm: 12px;
+$spacing-md: 20px;
+$spacing-lg: 30px;
+
+// Border Radius
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+
+// Transitions
+$transition-speed: 0.3s; 

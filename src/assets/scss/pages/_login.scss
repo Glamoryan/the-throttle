@@ -1,0 +1,19 @@
+// SCSS styles for Login page
+.login-container {
+  @include form-container;
+}
+
+.login-card {
+  @include card;
+}
+
+.login-button {
+  @include button;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: var(--spacing-md);
+  font-size: 14px;
+  color: var(--color-text-muted);
+} 
