@@ -1,41 +1,41 @@
 <template>
   <div class="roadmap-form">
     <div class="header">
-      <h2>{{ isEditing ? 'Edit Roadmap' : 'New Roadmap' }}</h2>
+      <h2>{{ isEditing ? 'Yol Haritası Düzenle' : 'Yeni Yol Haritası' }}</h2>
     </div>
 
     <form @submit.prevent="handleSubmit" class="form">
       <div class="form-group">
-        <label for="title">Title</label>
+        <label for="title">Başlık</label>
         <input
           id="title"
           v-model="formData.title"
           type="text"
           required
-          placeholder="Roadmap title"
+          placeholder="Yol haritası başlığı"
           :class="{ error: errors.title }"
         >
         <span v-if="errors.title" class="error-text">{{ errors.title }}</span>
       </div>
 
       <div class="form-group">
-        <label for="description">Description</label>
+        <label for="description">Açıklama</label>
         <textarea
           id="description"
           v-model="formData.description"
           rows="4"
-          placeholder="Roadmap description"
+          placeholder="Yol haritası açıklaması"
           :class="{ error: errors.description }"
         ></textarea>
         <span v-if="errors.description" class="error-text">{{ errors.description }}</span>
       </div>
 
       <div class="form-group">
-        <label>Topics</label>
+        <label>Konular</label>
         <div class="topics-container">
           <div v-for="(topic, index) in formData.topics" :key="index" class="topic-item">
             <div class="topic-header">
-              <h3>Topic {{ index + 1 }}</h3>
+              <h3>Konu {{ index + 1 }}</h3>
               <div class="topic-actions">
                 <button type="button" @click="removeTopic(index)" class="btn-danger">
                   <i class="fas fa-trash"></i>
@@ -45,12 +45,12 @@
             <input
               v-model="topic.title"
               type="text"
-              placeholder="Topic title"
+              placeholder="Konu başlığı"
               :class="{ error: errors[`topics.${index}.title`] }"
             >
             <textarea
               v-model="topic.description"
-              placeholder="Topic description"
+              placeholder="Konu açıklaması"
               :class="{ error: errors[`topics.${index}.description`] }"
             ></textarea>
             <div class="subtopics-container">
@@ -58,12 +58,12 @@
                 <input
                   v-model="subtopic.title"
                   type="text"
-                  placeholder="Subtopic title"
+                  placeholder="Alt konu başlığı"
                   :class="{ error: errors[`topics.${index}.subtopics.${subtopicIndex}.title`] }"
                 >
                 <textarea
                   v-model="subtopic.description"
-                  placeholder="Subtopic description"
+                  placeholder="Alt konu açıklaması"
                   :class="{ error: errors[`topics.${index}.subtopics.${subtopicIndex}.description`] }"
                 ></textarea>
                 <button type="button" @click="removeSubtopic(index, subtopicIndex)" class="btn-danger">
@@ -71,18 +71,18 @@
                 </button>
               </div>
               <button type="button" @click="addSubtopic(index)" class="btn-secondary">
-                <i class="fas fa-plus"></i> Add Subtopic
+                <i class="fas fa-plus"></i> Alt Konu Ekle
               </button>
             </div>
           </div>
         </div>
         <button type="button" @click="addTopic" class="btn-secondary">
-          <i class="fas fa-plus"></i> Add Topic
+          <i class="fas fa-plus"></i> Konu Ekle
         </button>
       </div>
 
       <div v-if="isEditing" class="form-group">
-        <label for="progress">Progress (%)</label>
+        <label for="progress">İlerleme (%)</label>
         <input
           id="progress"
           v-model.number="formData.progress"
@@ -96,11 +96,11 @@
 
       <div class="form-actions">
         <button type="button" @click="$router.back()" class="btn-secondary">
-          Cancel
+          İptal
         </button>
         <button type="submit" class="btn-primary" :disabled="isLoading">
           <span v-if="isLoading" class="loader"></span>
-          {{ isEditing ? 'Update' : 'Create' }}
+          {{ isEditing ? 'Güncelle' : 'Oluştur' }}
         </button>
       </div>
     </form>
@@ -174,27 +174,27 @@ const validateForm = () => {
   const newErrors = {};
   
   if (!formData.value.title.trim()) {
-    newErrors.title = 'Title is required';
+    newErrors.title = 'Başlık zorunludur';
   }
   
   if (formData.value.progress < 0 || formData.value.progress > 100) {
-    newErrors.progress = 'Progress must be between 0 and 100';
+    newErrors.progress = 'İlerleme 0 ile 100 arasında olmalıdır';
   }
 
+  // Topic title kontrolü
   formData.value.topics.forEach((topic, index) => {
     if (!topic.title.trim()) {
-      newErrors[`topics.${index}.title`] = 'Topic title is required';
-    }
-    if (!topic.description.trim()) {
-      newErrors[`topics.${index}.description`] = 'Topic description is required';
+      newErrors[`topics.${index}.title`] = 'Konu başlığı zorunludur';
     }
     
+    // Alt topicler için sadece title girilmiş olanları kontrol et
     topic.subtopics.forEach((subtopic, subtopicIndex) => {
-      if (!subtopic.title.trim()) {
-        newErrors[`topics.${index}.subtopics.${subtopicIndex}.title`] = 'Subtopic title is required';
+      if (subtopic.title.trim() && !subtopic.description.trim()) {
+        newErrors[`topics.${index}.subtopics.${subtopicIndex}.description`] = 'Alt konu açıklaması da girilmelidir';
       }
-      if (!subtopic.description.trim()) {
-        newErrors[`topics.${index}.subtopics.${subtopicIndex}.description`] = 'Subtopic description is required';
+      
+      if (!subtopic.title.trim() && subtopic.description.trim()) {
+        newErrors[`topics.${index}.subtopics.${subtopicIndex}.title`] = 'Alt konu başlığı da girilmelidir';
       }
     });
   });
@@ -214,7 +214,7 @@ const handleSubmit = async () => {
     } else {
       await roadmapStore.createRoadmap(formData.value);
     }
-    router.push('/roadmaps');
+    router.push('/dashboard');
   } catch (err) {
     console.error('Error submitting form:', err);
   }

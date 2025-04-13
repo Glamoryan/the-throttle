@@ -1,48 +1,41 @@
 <template>
-  <div class="roadmap-list">
-    <div class="header">
-      <h2>My Roadmaps</h2>
-      <button @click="$router.push('/roadmaps/create')" class="btn-primary">
-        <i class="fas fa-plus"></i> New Roadmap
-      </button>
+  <div class="roadmap-list-container">
+    <h1>Topluluk Yol Haritaları</h1>
+    
+    <div v-if="isLoading" class="loading-state">
+      <p>Yol haritaları yükleniyor...</p>
     </div>
-
-    <div v-if="isLoading" class="loading">
-      <span class="loader"></span>
-      Loading...
+    
+    <div v-else-if="errorMessage" class="error-state">
+      <p>{{ errorMessage }}</p>
+      <button @click="fetchRoadmaps">Tekrar Dene</button>
     </div>
-
-    <div v-else-if="error" class="error">
-      {{ error }}
+    
+    <div v-else-if="roadmaps.length === 0" class="empty-state">
+      <p>Henüz hiç yol haritası yok. İlk oluşturan siz olun!</p>
     </div>
-
-    <div v-else-if="roadmaps.length === 0" class="empty">
-      You haven't created any roadmaps yet.
-    </div>
-
+    
     <div v-else class="roadmaps-grid">
-      <div v-for="roadmap in roadmaps" :key="roadmap._id" class="roadmap-card">
-        <div class="card-header">
-          <h3>{{ roadmap.title }}</h3>
-          <div class="actions">
-            <button @click="$router.push(`/roadmaps/${roadmap._id}/edit`)" class="btn-icon">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button @click="handleDelete(roadmap._id)" class="btn-icon delete">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-        </div>
-        
-        <p class="description">{{ roadmap.description }}</p>
-        
-        <div class="progress-bar">
-          <div :style="{ width: roadmap.progress + '%' }" class="progress"></div>
-          <span class="progress-text">{{ roadmap.progress }}%</span>
-        </div>
-        
-        <div class="card-footer">
-          <span class="date">Created: {{ new Date(roadmap.createdAt).toLocaleDateString('en-US') }}</span>
+      <div 
+        v-for="roadmap in roadmaps" 
+        :key="roadmap._id" 
+        class="roadmap-card"
+        @click="navigateToRoadmapDetail(roadmap._id)"
+      >
+        <h2 class="roadmap-title">{{ roadmap.title }}</h2>
+        <p class="roadmap-description">
+          {{ roadmap.description || 'Açıklama bulunmuyor' }}
+        </p>
+        <div class="roadmap-meta">
+          <span class="roadmap-topics">
+            {{ roadmap.topics?.length || 0 }} konu
+          </span>
+          <span class="roadmap-created">
+            {{ formatDate(roadmap.createdAt) }} tarihinde oluşturuldu
+          </span>
+          <span class="roadmap-author" v-if="roadmap.author">
+            {{ roadmap.author.username }} tarafından
+          </span>
         </div>
       </div>
     </div>
@@ -50,30 +43,43 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-import { useRoadmapStore } from '@/stores/roadmap';
-import { storeToRefs } from 'pinia';
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { topicService } from '../utils/api';
 
-const roadmapStore = useRoadmapStore();
-const { roadmaps, isLoading, error } = storeToRefs(roadmapStore);
+const router = useRouter();
+const roadmaps = ref([]);
+const isLoading = ref(true);
+const errorMessage = ref('');
 
-onMounted(async () => {
-  try {
-    await roadmapStore.fetchRoadmaps();
-  } catch (err) {
-    console.error('Error loading roadmaps:', err);
-  }
-});
-
-const handleDelete = async (id) => {
-  if (!confirm('Are you sure you want to delete this roadmap?')) {
-    return;
-  }
+const fetchRoadmaps = async () => {
+  isLoading.value = true;
+  errorMessage.value = '';
   
   try {
-    await roadmapStore.deleteRoadmap(id);
-  } catch (err) {
-    console.error('Error deleting roadmap:', err);
+    const response = await topicService.getRoadmaps();
+    roadmaps.value = response.data.roadmaps || [];
+  } catch (error) {
+    console.error('Yol haritaları yüklenirken hata:', error);
+    errorMessage.value = 'Yol haritaları yüklenirken hata oluştu. Lütfen daha sonra tekrar deneyin.';
+  } finally {
+    isLoading.value = false;
   }
+};
+
+onMounted(() => {
+  fetchRoadmaps();
+});
+
+const navigateToRoadmapDetail = (id) => {
+  router.push(`/roadmaps/${id}`);
+};
+
+const formatDate = (dateString) => {
+  if (!dateString) return 'N/A';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('tr-TR', { 
+    year: 'numeric', month: 'short', day: 'numeric' 
+  });
 };
 </script> 
