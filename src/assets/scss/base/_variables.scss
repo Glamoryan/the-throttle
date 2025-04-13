@@ -59,20 +59,19 @@
   --font-weight-medium: 500;
   --font-weight-bold: 700;
 
-  // Status/Notification Colors (Öneri)
-  --color-warning: #ffc107; // Sarı tonu
+  --color-warning: #ffc107;
   --color-warning-dark: #b8860b;
   --color-warning-rgb: 255, 193, 7;
 
-  --color-info: var(--color-accent); // Bilgi için accent rengini kullanabiliriz
+  --color-info: var(--color-accent);
   --color-info-dark: var(--color-accent);
-  --color-info-rgb: 147, 112, 219; // #9370db'nin RGB karşılığı
+  --color-info-rgb: 147, 112, 219;
 
-  --color-success-dark: #388e3c; // Mevcut success için koyu ton
-  --color-success-rgb: 76, 175, 80; // #4caf50'nin RGB karşılığı
+  --color-success-dark: #388e3c;
+  --color-success-rgb: 76, 175, 80;
 
-  --color-error-dark: #c62828; // Mevcut error için koyu ton
-  --color-error-rgb: 244, 67, 54; // #f44336'nın RGB karşılığı
+  --color-error-dark: #c62828;
+  --color-error-rgb: 244, 67, 54;
 }
 
 // SCSS variables
@@ -129,10 +128,7 @@ $font-weight-normal: 400;
 $font-weight-medium: 500;
 $font-weight-bold: 700;
 
-// Status/Notification Colors (Öneri)
 $color-warning: #ffc107;
 $color-info: $color-accent;
-
-// SCSS değişkenleri bölümüne de ekleyebilirsiniz (isteğe bağlı)
 $color-warning: #ffc107;
 $color-info: $color-accent; 
