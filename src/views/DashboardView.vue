@@ -35,6 +35,14 @@ const logout = async () => {
     console.error('Logout error:', error);
   }
 };
+
+const navigateToRoadmaps = () => {
+  router.push('/roadmaps');
+};
+
+const navigateToCreateRoadmap = () => {
+  router.push('/roadmaps/create');
+};
 </script>
 
 <template>
@@ -56,6 +64,17 @@ const logout = async () => {
           <p><strong>Username:</strong> {{ user.username }}</p>
           <p><strong>Email:</strong> {{ user.email }}</p>
           <p><strong>Account Created:</strong> {{ new Date(user.createdAt).toLocaleDateString() }}</p>
+        </div>
+      </div>
+      
+      <div class="dashboard-actions">
+        <div class="action-buttons">
+          <button @click="navigateToRoadmaps" class="action-button roadmap-button">
+            <i class="fas fa-map"></i> My Roadmaps
+          </button>
+          <button @click="navigateToCreateRoadmap" class="action-button create-button">
+            <i class="fas fa-plus"></i> Create New Roadmap
+          </button>
         </div>
       </div>
       

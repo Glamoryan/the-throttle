@@ -1,66 +1,142 @@
-// Import base files
-@import 'base/variables';
-@import 'base/mixins';
+// Base
+@import './base/variables';
+@import './base/mixins';
+
+// Components
+@import './components/header';
+
+// Pages
+@import './pages/dashboard';
+@import './pages/roadmap-form';
 
 // Global styles
-body {
+html, body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: var(--color-primary);
-  color: var(--color-text-light);
+  min-height: 100vh;
+  background-color: var(--color-background);
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--color-text);
+  line-height: 1.6;
+  padding-top: 60px;
 }
 
 #app {
-  width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: none;
-  padding: 0;
-  margin: 0;
+  flex-direction: column;
+  background-color: var(--color-background);
 }
 
-a {
-  color: var(--color-accent);
-  text-decoration: none;
-  font-weight: bold;
-  transition: var(--transition-speed);
-  
-  &:hover {
-    text-decoration: underline;
-    color: #ffffff;
-    background-color: transparent;
+// Form elements
+input, textarea, select {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-input-background);
+  color: var(--color-text);
+  transition: border-color var(--transition-speed);
+  box-sizing: border-box; // Input taşmasını önlemek için
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  &.error {
+    border-color: var(--color-error);
   }
 }
 
-h1 {
-  text-align: center;
-  color: var(--color-accent);
-  margin-bottom: 24px;
-  font-size: 24px;
-}
-
+// Form groups
 .form-group {
   margin-bottom: var(--spacing-md);
+  width: 100%;
 }
 
-label {
-  @include form-label;
+// Buttons
+.btn-primary, .btn-secondary {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  font-weight: 500;
+  min-width: 120px;
 }
 
-input {
-  @include form-input;
+.btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-text-light);
+
+  &:hover {
+    background-color: #7b5ac9;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 }
 
-.error-message {
+.btn-secondary {
+  background-color: var(--color-tertiary);
+  color: var(--color-text-light);
+
+  &:hover {
+    background-color: #4d4d4d;
+  }
+}
+
+// Error messages
+.error-text {
   color: var(--color-error);
-  margin-bottom: 15px;
-  font-size: 14px;
+  font-size: 0.9em;
+  margin-top: var(--spacing-xs);
+}
+
+// Loading indicator
+.loader {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid var(--color-text-light);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+  margin-right: var(--spacing-sm);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Form container styles
+.form {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+  background-color: var(--color-secondary);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+// Form actions
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
 }
 
 // Import pages
-@import 'pages/login';
-@import 'pages/register';
-@import 'pages/dashboard'; 
+@import './pages/login';
+@import './pages/register';
+@import './pages/roadmap'; 

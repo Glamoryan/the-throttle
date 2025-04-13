@@ -1,0 +1,108 @@
+.roadmap-form {
+  width: 100%;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: var(--spacing-lg);
+
+  .header {
+    margin-bottom: var(--spacing-lg);
+    
+    h2 {
+      color: var(--color-accent);
+      margin: 0;
+    }
+  }
+}
+
+.topics-container {
+  margin-bottom: var(--spacing-md);
+}
+
+.topic-item {
+  background-color: var(--color-tertiary);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  margin-bottom: var(--spacing-md);
+  box-sizing: border-box;
+
+  .topic-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+
+    h3 {
+      color: var(--color-accent);
+      margin: 0;
+    }
+  }
+
+  input, textarea {
+    width: 100%;
+    margin-bottom: var(--spacing-sm);
+    box-sizing: border-box;
+  }
+
+  textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+}
+
+.topic-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+}
+
+.subtopics-container {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+  width: 100%;
+  box-sizing: border-box;
+
+  .subtopic-item {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    box-sizing: border-box;
+
+    input, textarea {
+      width: 100%;
+      margin-bottom: var(--spacing-sm);
+      box-sizing: border-box;
+    }
+
+    textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    .btn-danger {
+      position: absolute;
+      top: var(--spacing-sm);
+      right: var(--spacing-sm);
+    }
+  }
+
+  .btn-secondary {
+    margin-top: var(--spacing-sm);
+  }
+}
+
+.btn-danger {
+  background-color: var(--color-error);
+  color: white;
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-speed);
+
+  &:hover {
+    background-color: #d32f2f;
+  }
+} 

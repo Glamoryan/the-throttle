@@ -1,0 +1,48 @@
+<template>
+  <header class="main-header">
+    <nav class="nav-container">
+      <router-link to="/dashboard" class="home-button">
+        <i class="fas fa-home"></i> Home
+      </router-link>
+    </nav>
+  </header>
+</template>
+
+<style lang="scss" scoped>
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--color-secondary);
+  padding: var(--spacing-sm);
+  box-shadow: var(--shadow-sm);
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.home-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--color-text-light);
+  text-decoration: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-speed);
+
+  &:hover {
+    background-color: var(--color-tertiary);
+    color: var(--color-accent);
+  }
+
+  i {
+    font-size: 1.2em;
+  }
+}
+</style> 

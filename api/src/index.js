@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const { errorHandler } = require('./utils/errorHandler');
 const authRoutes = require('./routes/authRoutes');
+const topicRoutes = require('./routes/topicRoutes');
 
 // Create Express app
 const app = express();
@@ -12,12 +13,24 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: true, // Tüm originlere izin ver
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range'],
+  maxAge: 600 // CORS ön kontrol isteklerini 10 dakika önbelleğe al
+}));
+
+// OPTIONS istekleri için özel middleware
+app.options('*', cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/topics', topicRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
