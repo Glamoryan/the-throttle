@@ -1,6 +1,18 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+/**
+ * Mongoose schema for User model
+ * 
+ * @typedef {Object} UserSchema
+ * @property {string} username - Unique username for the user
+ * @property {string} email - Unique email address of the user
+ * @property {string} passwordHash - Hashed password (not exposed in JSON responses)
+ * @property {string} role - User role ('user' or 'admin')
+ * @property {boolean} active - Whether the user account is active
+ * @property {Date} createdAt - Automatically added timestamp for creation
+ * @property {Date} updatedAt - Automatically added timestamp for updates
+ */
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -41,7 +53,17 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-// Pre-save hook to hash password
+/**
+ * Pre-save middleware to hash the password before saving
+ * 
+ * @async
+ * @function preSaveMiddleware
+ * @memberof UserSchema
+ * @param {function} next - Mongoose middleware next function
+ * @description
+ * Automatically hashes the password before saving to the database
+ * Only runs when the password field is modified
+ */
 userSchema.pre('save', async function(next) {
   if (!this.isModified('passwordHash')) return next();
   
@@ -54,8 +76,19 @@ userSchema.pre('save', async function(next) {
   }
 });
 
-// Method to verify password
-userSchema.methods.verifyPassword = async function(password) {
+/**
+ * Instance method to verify a password against the stored hash
+ * 
+ * @async
+ * @method verifyPassword
+ * @memberof UserSchema
+ * @instance
+ * @param {string} password - Plain text password to verify
+ * @returns {Promise<boolean>} - True if password matches, false otherwise
+ * @description
+ * Compares a plain text password with the stored hash using bcrypt
+ */
+userSchema.methods.verifyPassword = async function(password) { // To-do: move to service layer
   return bcrypt.compare(password, this.passwordHash);
 };
 

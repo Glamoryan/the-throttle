@@ -1,3 +1,11 @@
+/**
+ * Authentication Routes
+ * 
+ * @module routes/authRoutes
+ * @description Express router for authentication-related endpoints.
+ * Handles user registration, login, profile retrieval, and logout operations.
+ * Protected routes use the authenticate middleware to verify JWT tokens.
+ */
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');

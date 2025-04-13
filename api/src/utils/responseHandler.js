@@ -1,34 +1,63 @@
 /**
- * Başarılı API yanıtları için standart format
- * @param {Object} res - Express response nesnesi
- * @param {Number} statusCode - HTTP durum kodu
- * @param {String} message - Başarı mesajı
- * @param {Object} data - Yanıt verisi
- * @returns {Object} - JSON yanıtı
+ * Response Handler Utilities
+ * 
+ * @module utils/responseHandler
+ * @description Provides standardized response formats for API endpoints,
+ * ensuring consistent success and error responses throughout the application.
  */
-exports.successResponse = (res, statusCode, message, data = null) => {
-  return res.status(statusCode).json({
+
+/**
+ * Standardized format for successful API responses
+ * 
+ * @function successResponse
+ * @param {object} res - Express response object
+ * @param {number} [statusCode=200] - HTTP status code
+ * @param {string} [message='Success'] - Success message
+ * @param {*} [data=null] - Response data (optional)
+ * @returns {object} Standardized response with success status
+ * @description Creates a standardized success response with consistent format
+ */
+exports.successResponse = (res, statusCode = 200, message = 'Success', data = null) => {
+  const response = {
     status: 'success',
-    message,
-    data
-  });
+    message
+  };
+
+  if (data !== null) {
+    response.data = data;
+  }
+
+  return res.status(statusCode).json(response);
 };
 
 /**
- * Hata API yanıtları için standart format
- * @param {Object} res - Express response nesnesi
- * @param {Number} statusCode - HTTP durum kodu
- * @param {String} message - Hata mesajı
- * @param {Object} error - Hata detayları
- * @returns {Object} - JSON yanıtı
+ * Standardized format for error API responses
+ * 
+ * @function errorResponse
+ * @param {object} res - Express response object
+ * @param {number} [statusCode=500] - HTTP status code
+ * @param {string} [message='An error occurred'] - Error message
+ * @param {*} [error=null] - Error details (optional)
+ * @returns {object} Standardized error response
+ * @description Creates a standardized error response with consistent format.
+ * Includes detailed error information in development environment.
  */
-exports.errorResponse = (res, statusCode, message, error = null) => {
-  return res.status(statusCode).json({
+exports.errorResponse = (res, statusCode = 500, message = 'An error occurred', error = null) => {
+  const response = {
     status: 'error',
-    message,
-    error: error ? {
-      message: error.message,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
-    } : undefined
-  });
+    message
+  };
+
+  // Add error details in development environment
+  if (process.env.NODE_ENV === 'development' && error) {
+    response.error = typeof error === 'object' ? 
+      {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      } : 
+      error;
+  }
+
+  return res.status(statusCode).json(response);
 }; 
